@@ -71,7 +71,7 @@ def normalizeBooks(inputPath, outDir):
 
 def normalizeBorrowers(inputPath, outDir):
     # Input columns:  ID0000id, ssn, first_name, last_name, email, address, city, state, phone
-    # Output columns: Card_id, Ssn, Bname, Address, Phone  (matches the BORROWER table)
+    # Output columns: Card_id, Ssn, full name, Address, Phone  (matches the BORROWER table)
     borrowers = {}   # card_id = (ssn, name, address, phone); dict removes repeated ids
     skipped = []
 
@@ -84,12 +84,12 @@ def normalizeBorrowers(inputPath, outDir):
                 continue
             cardId = row[0].strip()
             ssn = row[1].strip()
-            name = normCase(row[2] + " " + row[3])             # first + last = Bname
+            name = normCase(row[2] + " " + row[3])             # first + last = full name
             address = ", ".join(                                # street, city, state
                 " ".join(part.split()) for part in (row[5], row[6], row[7])
             )
             phone = row[8].strip()
-            # row[4] (email) is dropped: the BORROWER table has no email column
+            # get rid of email column since output doesn't require it
             borrowers[cardId] = (ssn, name, address, phone)
 
     os.makedirs(outDir, exist_ok=True)
