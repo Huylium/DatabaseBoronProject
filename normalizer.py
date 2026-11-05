@@ -3,7 +3,7 @@ import os
 import re
 from string import capwords
 
-# takes (..) series 
+# takes (..) series off output
 STRIP_SERIES = True   
 
 
@@ -39,7 +39,7 @@ def normalizeBooks(inputPath, outDir):
                 continue
             isbn = row[1].strip()    # ISBN13 (row[0] is ISBN10)
             title = row[2]
-            if STRIP_SERIES:
+            if STRIP_SERIES: # runs only if we want to take series off output
                 title = re.sub(r"\s*\([^)]*\)\s*$", "", title)
             books[isbn] = normCase(title)
 
@@ -54,6 +54,8 @@ def normalizeBooks(inputPath, outDir):
 
     os.makedirs(outDir, exist_ok=True)
 
+
+    # creating output
     with open(os.path.join(outDir, "books.csv"), "w", encoding="utf-8", newline="\n") as f:
         for isbn, title in books.items():
             f.write(f"{isbn},{quoter(title)}\n")
@@ -94,6 +96,7 @@ def normalizeBorrowers(inputPath, outDir):
 
     os.makedirs(outDir, exist_ok=True)
 
+    # creating output
     with open(os.path.join(outDir, "borrowers.csv"), "w", encoding="utf-8", newline="\n") as f:
         for cardId, (ssn, name, address, phone) in borrowers.items():
             f.write(",".join(quoter(v) for v in (cardId, ssn, name, address, phone)) + "\n")
