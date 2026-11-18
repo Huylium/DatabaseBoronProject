@@ -9,27 +9,28 @@ CREATE TABLE authors (
 ):
 
 CREATE TABLE book_authors (
-    isbn VARCHAR(13) references book(isbn)
-    author_id INT references authors(author_id)
+    isbn VARCHAR(13) REFERENCES book(isbn)
+    author_id INT REFERENCES authors(author_id)
     PRIMARY KEY (isbn, author_id)
 
     
 ):
 
 CREATE TABLE borrower (
-    card_id INT PRIMARY KEY,
-    ssn INT NOT NULL,
+    card_id VARCHAR(10) PRIMARY KEY,
+    ssn VARCHAR(11) NOT NULL UNIQUE,
     Bname VARCHAR(500) NOT NULL,
     address VARCHAR(500) NOT NULL,
-    phone INT NOT NULL
+    phone VARCHAR(20)
 ):
 
 CREATE TABLE book_loans(
-    loan_id INT PRIMARY KEY,
-    isbn VARCHAR(13) NOT NULL,
-    card_id INT NOT NULL,
-    date_out VARCHAR NOT NULL,
-    due_date VARCHAR NOT NULL,
+    loan_id SERIAL PRIMARY KEY,
+    isbn VARCHAR(13) NOT NULL REFERENCES book(isbn),
+    card_id VARCHAR(10) NOT NULL REFERENCES borrower(card_id),
+    date_out DATE NOT NULL,
+    due_date DATE NOT NULL,
+    date_in DATE
 ):
 
 CREATE TABLE fines(
