@@ -1,27 +1,33 @@
-# DatabaseBoronProject
+# Database Boron Project
 Database project for Group Boron for 4347 Database Systems
 
-Language/version: Python 3.10+ and PostgreSQL. Verified with CPython 3.12.14, PostgreSQL 16.2, and Psycopg 3.3.9.
+Language/version: Python 3.10+ and PostgreSQL. Verified with 
+- CPython 3.12.14, PostgreSQL 16.2, and Psycopg 3.3.9.
+- 
 Compiler: not applicable; run the Python source directly. No separate compilation or build step is needed.
+
 Third-party dependency: psycopg[binary]==3.3.9. Imports include psycopg, psycopg.rows.dict_row, and psycopg.sql.
+
 Other imports are standard-library modules or files that are included with the project.
 
 1. Set up Python and PostgreSQL
-Open Git Bash in the extracted project folder. Install Python and PostgreSQL first, start the PostgreSQL service, and
-make sure psql and createdb are on PATH.
+Open Git Bash in the extracted project folder. Install Python and PostgreSQL first, start the PostgreSQL service, and make sure psql and createdb are on PATH.
+
 python -m venv .venv
 source .venv/Scripts/activate
 python -m pip install "psycopg[binary]==3.3.9"
+
 If needed, use py -3 instead of python to create the environment. On macOS/Linux, activate with source
 .venv/bin/activate. For PostgreSQL on Windows, a PATH example is below; replace 19 with your installed version:
 export PATH="/c/Program Files/PostgreSQL/19/bin:$PATH"
 Run this next command by itself, enter your PostgreSQL password, and press Enter:
 read -r -s -p "PostgreSQL password: " PGPASSWORD
 Then set the connection. Adjust the user, host, or port if your installation differs:
+
 export PGPASSWORD
 export LIBRARY_DB="host=localhost port=5432 dbname=library user=postgres"
 
-2. Create and load the database
+3. Create and load the database
 Skip this section if library is already populated. my_schema.sql drops existing tables, so use it only for a fresh setup.
 Run these commands from the project root:
 createdb -h localhost -U postgres library
@@ -37,7 +43,7 @@ SQL
 Use the included output/ files; they have no headers. Import once. Loans and fines start empty. Repeat the
 connection-variable setup in a new terminal.
 
-3. Run the features
+4. Run the features
 Keep the virtual environment active and LIBRARY_DB set. Search uses one case-insensitive substring across ISBN, title,
 or author:
 python -c 'from search import search; print(search("will"))'
@@ -59,7 +65,7 @@ python fines_cli.py refresh
 python fines_cli.py show
 python fines_cli.py pay ID000001
 
-4. Run the tests
+5. Run the tests
 createdb -h localhost -U postgres library_loans_test
 export LIBRARY_TEST_DB="host=localhost dbname=library_loans_test user=postgres"
 python -m unittest loans_test -v
