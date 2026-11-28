@@ -10,7 +10,7 @@ Third-party dependency: psycopg[binary]==3.3.9. Imports include psycopg, psycopg
 
 Other imports are standard-library modules or files that are included with the project.
 
-1. Set up Python and PostgreSQL
+**1. Set up Python and PostgreSQL**
 Open Git Bash in the extracted project folder. Install Python and PostgreSQL first, start the PostgreSQL service, and make sure psql and createdb are on PATH.
 
 -python -m venv .venv
@@ -31,7 +31,7 @@ Then set the connection. Adjust the user, host, or port if your installation dif
 - export PGPASSWORD
 - export LIBRARY_DB="host=localhost port=5432 dbname=library user=postgres"
 
-2. Create and load the database
+**2. Create and load the database**
 Skip this section if library is already populated. my_schema.sql drops existing tables, so use it only for a fresh setup.
 Run these commands from the project root:
 
@@ -49,7 +49,7 @@ SQL
 Use the included output/ files; they have no headers. Import once. Loans and fines start empty. Repeat the
 connection-variable setup in a new terminal.
 
-3. Run the features
+**3. Run the features**
 Keep the virtual environment active and LIBRARY_DB set. Search uses one case-insensitive substring across ISBN, title,
 or author:
 python -c 'from search import search; print(search("will"))'
@@ -73,7 +73,7 @@ python fines_cli.py refresh
 python fines_cli.py show
 python fines_cli.py pay ID000001
 
-4. Run the tests
+**4. Run the tests**
 - createdb -h localhost -U postgres library_loans_test
 - export LIBRARY_TEST_DB="host=localhost dbname=library_loans_test user=postgres"
 - python -m unittest loans_test -v
@@ -82,6 +82,6 @@ Skip createdb if the test database exists. Tests supply their own records in a t
 needed. A successful run ends with 31 tests passed
 
 
-NOTES:
+**NOTES:**
 -Have normalizer.py within the same folder of books.csv and borrowers.csv.
 -Run "python normalize.py" in the folder directory.
